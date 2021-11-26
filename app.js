@@ -79,8 +79,9 @@ io.on('disconnect', async function(){
 
 });
 
+const checkCredentials = require('./middleware/checkCredentials');
 
-app.post('/send-message/', function (req, res, done) {
+app.post('/send-message/', checkCredentials, function (req, res, done) {
   data = req.body
   console.log('Got body:', req.body)
   io.to(req.body.channel_name).emit(req.body.event_name, req.body.event_json);

@@ -1,23 +1,9 @@
 MagicPing - Personal chat server backend
 
-GET - /users/ - to get all users
+All REST API calls should contain app_id and app_secret in header
+## This is to send message to sockets subscribed to public channels
+POST - /send-message/ - to send message to a channel
 input-
-{}
+{"channel_name":"", "event_name":"", "event_json":""}
 output-
-success response with http 200
-
-
-POST - /users/ - to create user
-input-
-{'user_id':'user_id'}
-output-
-success response with http 200 or http 409 if duplicate found.
-
-
-POST - /keys/ - get new auth key for client to connect to websocket
-input-
-{'user_id':'user_id'}
-output-
-success response with http 200 or http 404 if user is not found.
-
-
+success response with http 200.
