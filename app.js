@@ -84,23 +84,18 @@ const checkCredentials = require('./middleware/checkCredentials');
 app.post('/send-message/', checkCredentials, function (req, res, done) {
   data = req.body
   console.log('Got body:', req.body)
-  io.to(req.body.channel_name).emit(req.body.event_name, req.body.event_json);
-  res.json({message: "message sent"});
+  // send message if channel is created already
+  Channel.findOne({channel_name: data.channel_name}, async function (err, result) {
+    if (err) throw err
 
-  // console.log('--------------------------------------------------------')
-  // Token.findOne({user_email: req.body.email, expired: false}, async function (err, result) {
-  //   if (err) throw err
-  //     res.status(500);
-  //     res.json({message: "error"});
-  //   if (result) {
-  //     console.log(result.socket_id);
-  //     io.to(result.socket_id).emit(req.body.event_name, req.body.event_json);
-  //     // res.json({message: "message sent"})
-  //   } else {
-  //     res.status(409);
-  //     res.json({message: "user is not logged in"});
-  //   }
-  // });
+    if (result) {
+      io.to(data.channel_name).emit(data.event_name, data.event_json);
+      res.json({message: "message sent"});
+    } else {
+      res.status(404);
+      res.json({message: "invalid channel"});
+    }
+  });
 })
 
 

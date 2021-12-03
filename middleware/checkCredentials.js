@@ -9,6 +9,10 @@ const checkCredentials = (req, res, next) => {
   if (req.headers['app_id']==app_id && req.headers['app_secret']==app_secret){
     next();
   }
+  else{
+    res.status(404);
+    res.json({message: "invalid credentials"});
+  }
 }
 
 module.exports = checkCredentials
