@@ -1,7 +1,7 @@
 
 MagicPing - Personal chat server backend  
 
-##### All REST API calls should contain app_id and app_secret in header
+##### All REST API calls should contain app-id and app-secret in header
 
 #### This is to send message to sockets subscribed to public channels
 
