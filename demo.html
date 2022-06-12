@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+  </head>
+  <body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.min.js"
+      integrity="sha512-mHO4BJ0ELk7Pb1AzhTi3zvUeRgq3RXVOu9tTRfnA6qOxGK4pG2u57DJYolI4KrEnnLTcH9/J5wNOozRTDaybXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      // Change the connection to the host that is running this code
+      const socket = io('http://localhost:9060/');
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.min.js" integrity="sha512-I9p4eOeWXGM9m5GhJYd3UDUA5Lr+Epp5e4ykWFYW9hv3jZqdR92S5p+ApMSWuMaV4E+JqILepP1G9kNer4AFGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  const socket = io("http://161.97.166.212:9060/");
-
-  socket.emit('join', 'room1');
-socket.on('purchase', data => {console.log(data)});
-socket.on('connect_error', err => {console.log('invalid token')});
-socket.on('disconnect', err => { console.log("disconnected")});
-</script>
-</body>
+      socket.emit('join', 'c1');
+      socket.on('purchase', (data) => {
+        console.log(data);
+      });
+      socket.on('connect_error', (err) => {
+        console.log('invalid token');
+      });
+      socket.on('disconnect', (err) => {
+        console.log('disconnected');
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+
+<form class="row border rounded-3" action="." method="post">
+  <legend>New Channel</legend>
+  <div class="mb-3">
+    <label for="">name</label>
+    <input type="text" class="form-control" name="channel_name" id="" />
+  </div>
+  <div class="mb-3">
+    <label for="">Private?</label>
+    <select name="is_public" class="form-control" id="">
+      <option value="yes">Yes</option>
+      <option value="no" selected>No</option>
+    </select>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Create</button>
+  </div>
+</form>
+
+{% endblock %}

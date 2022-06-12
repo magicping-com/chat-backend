@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %}
+
+<a href="/app/channels/new/">New</a>
+<label for="">Channels:</label>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">public</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for channel in channels %}
+    <tr>
+      <th scope="row">{{ loop.index }}</th>
+      <td>
+        {% if channel.is_public %}{{ channel.channel_name }}{% else %}<a
+          href="/app/channel/{{ channel.id }}"
+          >{{ channel.channel_name }}</a
+        >{% endif %}
+      </td>
+      <td>{{ channel.is_public }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

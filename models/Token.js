@@ -15,15 +15,15 @@ const TokenSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    expired:{
+    expired: {
       type: Boolean,
       default: false
     },
-    socket_id:{
+    socket_id: {
       type: String
     }
-
-  }
+  },
+  { timestamps: true }
 );
 
 
