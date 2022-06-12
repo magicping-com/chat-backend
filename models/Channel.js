@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const Channel = mongoose.model('Channel', Schema(
+const Channel = mongoose.model('Channel', new Schema(
   {
     channel_name: {
       type: String,

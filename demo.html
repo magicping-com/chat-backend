@@ -17,8 +17,13 @@
       // Change the connection to the host that is running this code
       const socket = io('http://localhost:9060/');
 
+      console.log('data');
       socket.emit('join', 'c1');
+      socket.on('connect', () => {
+        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      });
       socket.on('purchase', (data) => {
+        console.log('data1');
         console.log(data);
       });
       socket.on('connect_error', (err) => {

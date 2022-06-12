@@ -78,7 +78,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 const Token = require('./models/Token');
-const Channel = require('./models/Channel');
+const { Channel } = require('./models/Channel');
 
 const usersRoute = require("./routes/users");
 const authRouter = require("./routes/auth");
@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
   // const token = socket.handshake.auth.token;
 
   socket.on('join', function (channel_name) {
-    socket.join(channel_name);
+    // socket.join(channel_name);
 
     // join if the channel is public
     // Channel.findOne({ channel_name: channel_name, is_public: true }, function (err, result) {
@@ -129,7 +129,6 @@ io.on('connection', (socket) => {
     // });
 
     // Token required to join private channel
-    console.log(typeof Channel)
     Channel.findOne({ channel_name: channel_name }, function (err, result) {
       if (err) throw err
 
@@ -168,8 +167,12 @@ app.post('/send-message/', checkCredentials, function (req, res, done) {
   Channel.findOne({ channel_name: data.channel_name }, async function (err, result) {
     if (err) throw err
 
+    // console.log(data.channel_name)
+    // console.log(data.event_name, data.event_json);
+
     if (result) {
       io.to(data.channel_name).emit(data.event_name, data.event_json);
+      console.log('hi1')
       res.json({ message: "message sent" });
     } else {
       res.status(404);
