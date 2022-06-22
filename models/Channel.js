@@ -1,38 +1,23 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const channelUser = new mongoose.Schema(
+const Channel = mongoose.model('Channel', new Schema(
   {
-    user_id: {
-      type: String,
-      required: true
-    },
-    socket_id: {
-      type: String,
-      required: true
-    }
-  }
-);
-
-const ChannelSchema = new mongoose.Schema(
-  {
-    channel_name: {
+    name: {
       type: String,
       unique: true,
       required: true
     },
     users: [
-      channelUser
+      { type: Schema.Types.ObjectId, ref: 'User', required: true }
     ],
     is_public: {
       type: Boolean,
       required: true,
-    },
-    created_on: {
-      type: Date,
-      default: Date.now,
     }
-  }
-);
+  },
+  { timestamps: true }
+));
 
 
-module.exports = mongoose.model("Channel", ChannelSchema);
+module.exports = { Channel };
