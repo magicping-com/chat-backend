@@ -48,15 +48,10 @@ const User = mongoose.model('User', Schema({
 
 const UserLogin = mongoose.model('UserLogin', Schema(
   {
-    id: { type: String, required: true },
-    user_id: { type: String, required: true },
-    isActive: { type: Boolean }
-
+    email: { type: String, required: true },
+    name: { type: String, required: true },
+    is_active: { type: Boolean }
   }, { timestamps: true }
 ))
-
-// Export model
-// module.exports = mongoose.model("User", UserSchema);
-// module.exports = mongoose.model('UserLogin', UserLogin)
 
 module.exports = { User, UserLogin }

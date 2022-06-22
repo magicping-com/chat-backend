@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 require('dotenv').config()
 
 passport.serializeUser(function (user, done) {
-    console.log(user)
+    // console.log(user)
     done(null, user)
 })
 

@@ -8,29 +8,38 @@ router.get('/google/', passport.authenticate('google', { scope: ['profile', 'ema
 router.get('/google/callback/',
     passport.authenticate('google', { failureRedirect: '/' }),
     async function (req, res) {
-        console.log(req.user._json.name)
-        // create user if he is not in the system already
-        if (await UserLogin.exists({ id: req.user._json.id }) == false) {
-            // const user = new UserLogin({
-            //     id: req.user._json.id,
-            //     email: req.user._json.email,
-            //     name: req.user._json.name
-            // })
-            // await user.save()
+        console.log("user name:", req.user._json.name)
+        console.log("user email:", req.user._json.email)
+        console.log("users count", await UserLogin.count({}))
+
+        // create first user if there are no users in the db
+        if (await UserLogin.count({}) == 0) {
+            const user = new UserLogin({
+                email: req.user._json.email,
+                name: req.user._json.name,
+                is_active: true
+            })
+            await user.save()
+        }
+
+        // create user if the is not in the system already
+        if (await UserLogin.exists({ email: req.user._json.email })) {
             res.redirect('/app/')
-        } else if (await UserLogin.exists({ id: req.user._json.id, is_active: false })) {
+        } else if (await UserLogin.exists({ email: req.user._json.email, is_active: false })) {
             // if user is not active, logout the request and show him that his account is not active.
             req.logout()
             res.render('user/auth_blocked.html')
         } else {
-            res.redirect('/app/')
+            res.redirect('/')
         }
     }
 )
 
 router.get('/logout/', async function (req, res) {
-    req.logout()
-    res.redirect('/')
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
 })
 
 module.exports = router
