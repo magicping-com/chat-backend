@@ -13,8 +13,8 @@ async function new_channel(req, res, next) {
     else if (req.method == "POST") {
 
         const channel = new Channel({
-            channel_name: req.body.channel_name,
-            is_public: (req.body.is_public == "yes") ? true : false,
+            name: req.body.channel_name,
+            is_public: (req.body.is_private == "on") ? false : true,
         })
 
         await channel.save()
@@ -35,7 +35,7 @@ async function channel_detail(req, res, next) {
     else if (req.method == "POST") {
 
         const channel = new Channel({
-            channel_name: req.body.channel_name,
+            name: req.body.channel_name,
             is_public: (req.body.is_public == "yes") ? true : false,
         })
 

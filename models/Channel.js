@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const Channel = mongoose.model('Channel', new Schema(
   {
-    channel_name: {
+    name: {
       type: String,
       unique: true,
       required: true

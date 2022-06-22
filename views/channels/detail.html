@@ -1,21 +1,31 @@
 {% extends 'base.html' %} {% block content %}
+<div class="card">
+  <div class="card-body p-4">
+    <h5 class="card-title mb-4">
+      <a href="/app/channels/" class="float-end fs-6 ms-4">Back </a>
+      <span class="fs-6 fw-normal">Channel: {{ channel.name }}</span>
+    </h5>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in channel.users %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ user }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- <a href="/app/channels/">Back</a>
+<label for="">Channel: {{ channel.name }}</label> -->
 
-<a href="/app/channels/">Back</a>
-<label for="">Channel: {{ channel.channel_name }}</label>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">User</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in channel.users %}
-    <tr>
-      <th scope="row">{{ loop.index }}</th>
-      <td>{{ user }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 {% endblock %}

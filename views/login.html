@@ -5,43 +5,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MagicPing</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
-      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"
+      integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=="
       crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
+
     <link type="text/css" href="/user/css/main.css" rel="stylesheet" />
   </head>
   <body>
     <div class="body">
       <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-xl-3 login_MagicPing">
-            <h2 class="heading text-center">
-              Welcome to MagicPing
-              <span>Sign In to Continue!</span>
-            </h2>
-            <div class="login_block">
-              <a href="/auth/google/" class="social-button google"
-                ><i class="fab fa-google"></i> <span>Login with Google</span>
-              </a>
-              <!-- <a href="#" class="social-button linkedin"><i class="fab fa-linkedin-in"></i> <span>Connect with LinkedIn</span> </a> -->
-              <!-- <a href="#" class="social-button github"><i class="fab fa-github"></i> <span>Connect with Github</span> </a> -->
+        <div class="row justify-content-center mt-5">
+          <div class="col-xl-6 login_MagicPing">
+            <div class="card shadow">
+              <div class="card-body">
+                <p class="fs-2 text-center fw-bold mt-3">
+                  Welcome to MagicPing
+                  <!-- <span class="d-block fs-5">Sign In to Continue!</span> -->
+                </p>
+                <div class="login_block text-center mt-5 mb-5">
+                  <a
+                    href="/auth/google/"
+                    class="social-button google social-button google mx-auto text-decoration-none bg-danger py-3 px-4 text-white border-none rounded-3 fw-bold fs-5"
+                    ><i class="fab fa-google me-2"></i>
+                    <span>Login with Google</span>
+                  </a>
+                  <!-- <a href="#" class="social-button linkedin"><i class="fab fa-linkedin-in"></i> <span>Connect with LinkedIn</span> </a> -->
+                  <!-- <a href="#" class="social-button github"><i class="fab fa-github"></i> <span>Connect with Github</span> </a> -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-pax4MlgXjHEPfCwcJLQhigY7+N8rt6bVvWLFyUMuxShv170X53TRzGPmPkZmGBhk+jikR8WBM4yl7A9WMHHqvg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>

@@ -79,12 +79,15 @@ app.use(express.urlencoded({ extended: true }))
 
 const Token = require('./models/Token');
 const { Channel } = require('./models/Channel');
+const { Socket } = require('./models/Socket');
 
+const apiRoute = require("./routes/api");
 const usersRoute = require("./routes/users");
 const authRouter = require("./routes/auth");
 const authChannel = require("./routes/channels");
 const userAppRouter = require("./routes/app");
 
+app.use('/api', checkCredentials, apiRoute);
 app.use('/users', checkCredentials, usersRoute);
 // app.use('/auth', authRoute);
 app.use('/channels', checkCredentials, authChannel);
@@ -114,65 +117,95 @@ io.on('connection', (socket) => {
   // const token = socket.handshake.auth.token;
 
   socket.on('join', function (channel_name) {
-    // socket.join(channel_name);
 
-    // join if the channel is public
-    // Channel.findOne({ channel_name: channel_name, is_public: true }, function (err, result) {
-    //   if (err) throw err
+    Channel.findOne({ name: channel_name }, function (err, result) {
 
-    //   if (result) {
-    //     socket.join(channel_name);
-    //     console.log("joined")
-    //   } else {
-    //     socket.disconnect();
-    //   }
-    // });
-
-    // Token required to join private channel
-    Channel.findOne({ channel_name: channel_name }, function (err, result) {
       if (err) throw err
 
       if (result) {
         if (result.is_public == true) {
           socket.join(channel_name);
+          // console.log("joined public channel")
         }
         else {
+
           // 1. get socket id.
           // 2. check the socket id in the users sockets.
           // 3. get token if available.
           // 4. exit if token is not available for the socket.
           // 5. check if the user is added to the channel or not to join.
+
+          Socket.findOne({ channel: result, socket_id: socket.id }, async function (err, result) {
+            if (err) throw err
+
+            if (result) {
+              result.connected = true;
+              await result.save();
+              socket.join(channel_name);
+              // console.log("joined private channel")
+            }
+          });
         }
-        console.log("joined")
       } else {
         socket.disconnect();
       }
     });
   });
-
 });
 
 io.on('disconnect', async function () {
   console.log('socket disconnected');
 });
 
+io.of("/").adapter.on("join-room", async (room, id) => {
+  console.log(`socket ${id} has joined room ${room}`);
+  if (room.split("-")[0] == "presence") {
+
+    // need to emit status to the room
+    sockets = await Socket.find({ channel_name: room, connected: true }, { _id: 0, user_id: 1, user_info: 1 });
+    // io.to(room).emit("member_joined", docs)
+    // });
+
+    io.to(room).emit("member_joined", sockets)
+
+  }
+});
+
+io.of("/").adapter.on("leave-room", (room, id) => {
+  console.log(`socket ${id} has left room ${room}`);
+
+  if (room.split("-")[0] == "presence") {
+    Socket.findOne({ channel_name: room, socket_id: id }, async function (err, result) {
+      if (err) throw err
+
+      if (result) {
+        result.connected = false;
+        await result.save();
+        // console.log("joined private channel")
+        io.to(room).emit("member_left", sockets)
+
+      }
+    });
+  }
+});
+
 app.get('/', function (req, res) {
   res.render('login.html')
+})
+
+app.get('/demo', function (req, res) {
+  res.render('demo.html')
 })
 
 app.post('/send-message/', checkCredentials, function (req, res, done) {
   data = req.body
   console.log('Got body:', req.body)
   // send message if channel is created already
-  Channel.findOne({ channel_name: data.channel_name }, async function (err, result) {
+  Channel.findOne({ name: data.channel_name }, async function (err, result) {
     if (err) throw err
-
-    // console.log(data.channel_name)
-    // console.log(data.event_name, data.event_json);
 
     if (result) {
       io.to(data.channel_name).emit(data.event_name, data.event_json);
-      console.log('hi1')
       res.json({ message: "message sent" });
     } else {
       res.status(404);
