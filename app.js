@@ -7,7 +7,7 @@ const passport = require('passport')
 const nunjucks = require('nunjucks')
 const session = require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
-// const { instrument } = require("@socket.io/admin-ui");
+const { instrument } = require("@socket.io/admin-ui");
 const { createServer } = require('http');
 
 const app = express();
@@ -26,9 +26,9 @@ const io = require('socket.io')(server, {
   }
 })
 
-// instrument(io, {
-//   auth: false
-// });
+instrument(io, {
+  auth: false
+});
 
 app.use(cors());
 mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true });

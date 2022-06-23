@@ -2,7 +2,6 @@ const { Channel } = require("../models/Channel");
 const { User } = require("../models/User");
 const { Socket } = require("../models/Socket");
 var crypto = require('crypto');
-const { channel } = require("diagnostics_channel");
 
 async function new_channel(req, res, next) {
 
