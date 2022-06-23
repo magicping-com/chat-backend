@@ -214,7 +214,7 @@ app.post('/send-message/', checkCredentials, function (req, res, done) {
   });
 })
 
-
-server.listen(9060, () => {
-  console.log('listening on *:9060')
+var port = process.env.PORT || '3000';
+server.listen(port, () => {
+  console.log('listening on', port)
 });
